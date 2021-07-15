@@ -3,6 +3,21 @@
 </p>
 
 <p align="center">
+  <a href="LICENSE.md" target="_blank">
+    <img src="https://badgen.net/badge/license/MIT/blue" alt="">
+  </a>
+  <a href="https://github.com/hnimminh/redfs/releases" target="_blank">
+    <img src="https://badgen.net/github/tag/hnimminh/redfs" alt="">
+  </a>
+  <a href="https://pypi.org/project/redfs" target="_blank">
+    <img src="https://img.shields.io/pypi/pyversions/redfs" alt="">
+  </a>
+  <a href="https://pypi.org/project/redfs" target="_blank">
+    <img src="https://img.shields.io/badge/download- xyz- red" alt="">
+  </a>
+</p>
+
+<p align="center">
   <br>
   <strong>RedFS - FreeSWITCH Event Socket </strong>
   <br>
