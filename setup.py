@@ -1,6 +1,5 @@
 from setuptools import setup, find_packages
 
-
 AUTHOR      = u'Minh Minh'
 EMAIL       = u'hnimminh@outlook.com'
 NAME        = u'redfs'
