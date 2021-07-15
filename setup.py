@@ -31,7 +31,8 @@ setup(
     license='MIT',
     packages=find_packages(exclude=('tests', 'docs')),
     classifiers=[
-        'Development Status :: 5 - Production/Stable',
+        # 'Development Status :: 5 - Production/Stable',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'Programming Language :: Python',
         'License :: OSI Approved :: MIT License',
