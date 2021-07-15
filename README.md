@@ -21,7 +21,7 @@
   <br>
   <strong>RedFS - FreeSWITCH Event Socket </strong>
   <br>
-  <code>FreeSWITCH Event Socket Protocol Client Library by Python3:Genvet</code>
+  <code>FreeSWITCH Event Socket Protocol Client Library by Python3:Gevent</code>
   <br><br>
 </p>
 
