@@ -28,7 +28,13 @@ var/
 .tool-versions
 
 ### macOS ###
-# General
 .DS_Store
 .AppleDouble
 .LSOverride
+
+### Linux ###
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
