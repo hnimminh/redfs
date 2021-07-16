@@ -31,6 +31,7 @@ It's origin fork from greenswitch, with some adapt implementation for:
 * Minimalize dependency (gevent only)
 * Python3 syntax improvement
 * Large scale adaptation
+* Bug fix
 
 
 ## Usage
@@ -40,14 +41,75 @@ It's origin fork from greenswitch, with some adapt implementation for:
 pip3 install redfs
 ```
 
-**Example**
+**FreeSWITCH configuration**
+
+*event socket module*
+```html
+<configuration name="event_socket.conf" description="Socket Client">
+  <settings>
+    <param name="nat-map" value="false"/>
+    <param name="listen-ip" value="127.0.0.1"/>
+    <param name="listen-port" value="8021"/>
+    <param name="password" value="your-esl-password"/>
+  </settings>
+</configuration>
+```
+
+*dialplan*
+```html
+<include>
+  <context name="default">
+    <extension name="daemon-ex">
+      <condition regex="all">
+        <regex field="destination_number" expression="."/>
+        <action application="sched_hangup" data="+60 ALLOTTED_TIMEOUT"/>
+        <action application="park"/>
+        <anti-action application="hangup" data="REQUESTED_CHAN_UNAVAIL"/>
+     </condition>
+    </extension>
+  </context>
+</include>
+```
+
+a simple python application for auto answer.
 
 ```python
-    >>> import redfs
-    >>> fs = redfs.InboundESL(host='127.0.0.1', port=8021, password='ClueCon')
-    >>> fs.connect()
-    >>> r = fs.send('api list_users')
-    >>> print r.data
+import gevent
+import redfs
+import traceback
+
+
+ESL_HOST = '127.0.0.1'
+ESL_PORT = 8021
+ESL_PASSWORD = 'your-esl-password'
+ESL_TIMEOUT = 10
+
+def dosome(event):
+    event_name = event.headers.get('Event-Name')
+    uuid = event.headers.get('Unique-ID')
+    print(f'Event {event_name} with uuid {uuid}')
+
+    conn = redfs.InboundESL(host=ESL_HOST, port=ESL_PORT, password=ESL_PASSWORD, timeout=ESL_TIMEOUT)
+    conn.connect()
+
+    if event_name == 'CHANNEL_PARK':
+        cmd = f'api uuid_answer {uuid}'
+        res = conn.send(cmd)
+        print(cmd, res.data)
+
+cnx = redfs.InboundESL(host=ESL_HOST, port=ESL_PORT, password=ESL_PASSWORD, timeout=ESL_TIMEOUT)
+cnx.connect()
+cnx.register_handle('*', dosome)
+cnx.send('EVENTS PLAIN ALL')
+print('connected')
+while True:
+    try:
+        gevent.sleep(1)
+    except KeyboardInterrupt:
+        cnx.stop()
+        break
+    except Exception as e:
+        print(e, traceback.format_exc())
 ```
 
 Enjoy!
