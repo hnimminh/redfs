@@ -240,8 +240,7 @@ class InboundESL(ESLProtocol):
         self.start_event_handlers()
         self._auth_request_event.wait()
         if not self.connected:
-            raise NotConnectedError('Server closed connection, check '
-                                    'FreeSWITCH config.')
+            raise NotConnectedError('Server closed connection, check FreeSWITCH config.')
         self.authenticate()
 
     def authenticate(self):
