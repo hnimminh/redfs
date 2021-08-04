@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 
-import errno
-import functools
 import logging
 import pprint
-import sys
 
 import gevent
 import gevent.socket as socket
@@ -54,9 +51,10 @@ class ESLProtocol(object):
         self._receive_events_greenlet = gevent.spawn(self.receive_events)
         self._process_events_greenlet = gevent.spawn(self.process_events)
 
-    def register_handle(self, name, handler):
-        if name not in self.event_handlers:
-            self.event_handlers[name] = []
+    def register_handle(self, names, handler):
+        for name in names:
+            if name not in self.event_handlers:
+                self.event_handlers[name] = []
         if handler in self.event_handlers[name]:
             return
         self.event_handlers[name].append(handler)
