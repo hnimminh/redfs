@@ -55,9 +55,9 @@ class ESLProtocol(object):
         for name in names:
             if name not in self.event_handlers:
                 self.event_handlers[name] = []
-        if handler in self.event_handlers[name]:
-            return
-        self.event_handlers[name].append(handler)
+            if handler in self.event_handlers[name]:
+                return
+            self.event_handlers[name].append(handler)
 
     def unregister_handle(self, name, handler):
         if name not in self.event_handlers:
