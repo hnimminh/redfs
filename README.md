@@ -27,12 +27,11 @@
 
 
 ## Why RedFS ?
-It's origin fork from greenswitch, with some adapt implementation for:
+It's origin fork from [greenswitch](https://github.com/EvoluxBR/greenswitch), with additional implementation:
 * Minimalize dependency (gevent only)
-* Python3 syntax improvement
 * Large scale adaptation
 * Bug fix
-
+* Python3 syntax improvement
 
 ## Usage
 
@@ -84,7 +83,7 @@ ESL_PORT = 8021
 ESL_PASSWORD = 'your-esl-password'
 ESL_TIMEOUT = 10
 
-def dosome(event):
+def realtime(event):
     event_name = event.headers.get('Event-Name')
     uuid = event.headers.get('Unique-ID')
     print(f'Event {event_name} with uuid {uuid}')
@@ -97,9 +96,16 @@ def dosome(event):
         res = conn.send(cmd)
         print(cmd, res.data)
 
+def printlog(event):
+    event_name = event.headers.get('Event-Name')
+    uuid = event.headers.get('Unique-ID')
+    print(f'Event {event_name} with uuid {uuid}')
+
 cnx = redfs.InboundESL(host=ESL_HOST, port=ESL_PORT, password=ESL_PASSWORD, timeout=ESL_TIMEOUT)
 cnx.connect()
-cnx.register_handle('*', dosome)
+
+cnx.register_handle(['CHANNEL_PARK', 'CHANNEL_ANSWER'], realtime)
+cnx.register_handle('*', printlog)
 cnx.send('EVENTS PLAIN ALL')
 print('connected')
 while True:
