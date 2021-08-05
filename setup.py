@@ -4,7 +4,7 @@ AUTHOR      = u'Minh Minh'
 EMAIL       = u'hnimminh@outlook.com'
 NAME        = u'redfs'
 DESCRIPTION = u'Pure Python3 with Gevent implement the FreeSWITCH Event Socket Protocol Client'
-URL         = u'https://github.com/hnimminh/redsw'
+URL         = u'https://github.com/hnimminh/redfs'
 META = {}
 
 
