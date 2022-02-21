@@ -71,6 +71,8 @@ class ESLProtocol(object):
         while self._run:
             try:
                 data = self.sock_file.readline()
+                if data is not None:
+                    data = data.decode('utf-8')
             except Exception:
                 self._run = False
                 self.connected = False
@@ -103,6 +105,8 @@ class ESLProtocol(object):
             # FIXME: if not data raise error
             data += sock.read(length - data_length)
             data_length = len(data)
+        if data is not None:
+            data = data.decode('utf-8')
         return data
 
     def handle_event(self, event):
@@ -234,7 +238,7 @@ class InboundESL(ESLProtocol):
 
         self.connected = True
         self.sock.settimeout(None)
-        self.sock_file = self.sock.makefile()
+        self.sock_file = self.sock.makefile('rb')
         self.start_event_handlers()
         self._auth_request_event.wait()
         if not self.connected:
