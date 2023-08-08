@@ -229,7 +229,7 @@ class InboundESL(ESLProtocol):
         self.connected = False
 
     def connect(self):
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.sock = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
         self.sock.settimeout(self.timeout)
         try:
             self.sock.connect((self.host, self.port))
