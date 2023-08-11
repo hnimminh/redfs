@@ -227,9 +227,13 @@ class InboundESL(ESLProtocol):
         self.password = password
         self.timeout = timeout
         self.connected = False
+        self.sock: socket.socket = None
 
     def connect(self):
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        if self.is_ipv6(self.host):
+            self.sock = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
+        else:
+            self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.settimeout(self.timeout)
         try:
             self.sock.connect((self.host, self.port))
@@ -256,3 +260,11 @@ class InboundESL(ESLProtocol):
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.stop()
+
+    @staticmethod
+    def is_ipv6(host):
+        try:
+            socket.inet_pton(socket.AF_INET6, host)
+            return True
+        except socket.error:
+            return False
