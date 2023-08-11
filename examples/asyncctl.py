@@ -21,6 +21,7 @@ def dosome(event):
         cmd = f'api uuid_answer {uuid}'
         res = conn.send(cmd)
         print(cmd, res.data)
+        conn.stop()
 
 
 cnx = redfs.InboundESL(host=ESL_HOST, port=ESL_PORT, password=ESL_PASSWORD, timeout=ESL_TIMEOUT)
