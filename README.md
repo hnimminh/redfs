@@ -31,7 +31,7 @@ It's origin fork from [greenswitch](https://github.com/EvoluxBR/greenswitch), wi
 * Minimalize dependency (gevent only)
 * Large scale adaptation
 * Bug fix
-* Dualstack Ipv4/IPv6
+* Dualstack IPv4/IPv6
 * Python3 syntax improvement
 
 ## Usage
